@@ -545,10 +545,203 @@
     .studio-logo-wrap { flex-direction: row; } /* Muda a direção do flex para o wrapper do logotipo do estúdio */
   }
   @media (max-width: 600px) {
-    .nav-links { display: none; } /* Esconde os links de navegação */
     .stat-cards { grid-template-columns: 1fr 1fr; } /* Mantém os cartões de estatísticas em duas colunas */
     .studio-logo-wrap { flex-direction: column; } /* Muda a direção do flex para o wrapper do logotipo do estúdio para coluna */
     .studio-logo-box { width: 160px; height: 160px; } /* Ajusta o tamanho da caixa do logotipo do estúdio */
+  }
+
+  /* ============================================================
+     ─── MENU HAMBÚRGUER (NAV MOBILE) ───
+     Botão escondido em desktop e visível em telas pequenas.
+     Em mobile, os links da nav viram um painel suspenso vertical.
+     ============================================================ */
+  .nav-toggle {
+    display: none;                                    /* Oculto em desktop */
+    background: transparent;
+    border: 1px solid rgba(212,160,23,.3);
+    color: var(--gold);
+    font-size: 1.2rem; line-height: 1;
+    padding: .4rem .65rem;
+    border-radius: 3px;
+    transition: border-color .3s, background .3s;
+  }
+  .nav-toggle:hover { border-color: var(--gold); background: rgba(212,160,23,.08); }
+
+  /* ============================================================
+     ─── AJUSTES PARA TABLETS E CELULARES (≤ 720px) ───
+     Hambúrguer ativo, paddings menores, hero/CTA empilhados,
+     galeria reduzida, devs em grid mais flexível.
+     ============================================================ */
+  @media (max-width: 720px) {
+    .nav-toggle { display: inline-block; }            /* Mostra o hambúrguer */
+    .nav-links {
+      /* Painel suspenso: aparece somente quando recebe a classe .open via JS */
+      position: absolute; top: 100%; right: 1rem;
+      flex-direction: column; gap: 0;
+      background: rgba(10,8,4,.97);
+      border: 1px solid rgba(212,160,23,.25);
+      border-radius: 4px; padding: .5rem 0;
+      min-width: 180px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.5);
+      display: none;                                  /* Fechado por padrão */
+    }
+    .nav-links.open { display: flex; }                /* Aberto via JS */
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: .8rem 1.4rem; font-size: .8rem; }
+    .nav-links a:hover { background: rgba(212,160,23,.08); }
+
+    section { padding: 4rem 1.25rem; }                /* Padding menor em mobile */
+
+    /* HERO responsivo */
+    .hero-logo { width: clamp(180px, 70vw, 380px); }
+    .hero-tagline { letter-spacing: .25em; font-size: clamp(.85rem, 3.5vw, 1.1rem); }
+    .hero-sub { font-size: .85rem; padding: 0 1rem; text-align: center; }
+    .hero-cta { flex-direction: column; width: 100%; padding: 0 1.5rem; gap: .8rem; }
+    .hero-cta .btn { width: 100%; text-align: center; }
+    .scroll-hint { display: none; }                   /* Evita sobrepor o CTA */
+
+    /* GALERIA: cartões menores e loop um pouco mais rápido */
+    .gallery-card { width: 200px; height: 130px; }
+    .gallery-track { animation-duration: 18s; }
+
+    /* SOBRE O JOGO */
+    .game-grid { gap: 2rem; }
+
+    /* DEVS: dois cartões cabem em tablets pequenos */
+    .devs-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+    .dev-card { padding: 1.5rem 1rem; }
+
+    /* RODAPÉ: links em quebra de linha */
+    .footer-links { flex-wrap: wrap; gap: 1rem 1.5rem; padding: 0 1rem; }
+  }
+
+  /* ============================================================
+     ─── CELULARES MUITO PEQUENOS (≤ 480px) ───
+     Reduz ainda mais paddings/fonts e estatísticas viram 1 coluna.
+     ============================================================ */
+  @media (max-width: 480px) {
+    nav { padding: .8rem 1rem; }
+    .nav-brand { font-size: 1rem; }
+    section { padding: 3.5rem 1rem; }
+    .section-title { font-size: clamp(1.4rem, 6vw, 1.9rem); }
+    .body-text { font-size: .95rem; line-height: 1.75; }
+    .stat-cards { grid-template-columns: 1fr; }
+    .stat-card { padding: 1.2rem; }
+    .gallery-card { width: 170px; height: 110px; font-size: .7rem; }
+    .studio-logo-box { width: 140px; height: 140px; padding: 1.5rem; }
+    .studio-logo-svg { width: 110px; }
+    footer { padding: 2rem 1rem; }
+  }
+
+  /* ============================================================
+     ─── MODAL DE CONTATO ───
+     Popup acionado pelo botão "📧 Contato".
+     ============================================================ */
+  .modal {
+    position: fixed; inset: 0; z-index: 1000;
+    display: none;                                    /* Oculto por padrão */
+    align-items: center; justify-content: center;
+    padding: 1.5rem;
+  }
+  .modal.open { display: flex; }                      /* Estado aberto */
+
+  .modal-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(5,4,2,.78);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: modal-fade .25s ease;
+  }
+
+  .modal-box {
+    position: relative;
+    width: 100%; max-width: 460px;
+    background: linear-gradient(160deg, var(--dark2) 0%, var(--dark) 100%);
+    border: 1px solid rgba(212,160,23,.3);
+    border-radius: 6px;
+    padding: 2rem 1.8rem 1.8rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,.7), 0 0 40px rgba(212,160,23,.1);
+    animation: modal-pop .35s cubic-bezier(.2,.9,.3,1.2);
+    max-height: 90vh; overflow-y: auto;
+  }
+
+  .modal-close {
+    position: absolute; top: .6rem; right: .8rem;
+    background: transparent; border: none;
+    color: var(--muted); font-size: 1.3rem; line-height: 1;
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: color .2s, background .2s;
+  }
+  .modal-close:hover { color: var(--gold-light); background: rgba(212,160,23,.1); }
+
+  .modal-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.4rem; color: var(--gold-light);
+    text-align: center; letter-spacing: .1em;
+  }
+  .modal-subtitle {
+    text-align: center; font-family: 'Cinzel', serif;
+    font-size: .7rem; letter-spacing: .35em;
+    color: var(--gold-dim); text-transform: uppercase;
+    margin-bottom: .5rem;
+  }
+
+  .modal-section {
+    display: flex; gap: .9rem; align-items: flex-start;
+    padding: .9rem 0;
+    border-top: 1px solid rgba(212,160,23,.08);
+  }
+  .modal-section:first-of-type { border-top: none; }
+  .modal-section .icon {
+    font-size: 1.2rem; flex-shrink: 0;
+    width: 32px; text-align: center;
+    filter: drop-shadow(0 0 4px rgba(212,160,23,.4));
+  }
+  .modal-section .label {
+    font-family: 'Cinzel', serif;
+    font-size: .72rem; letter-spacing: .2em;
+    color: var(--gold-dim); text-transform: uppercase;
+    margin-bottom: .25rem;
+  }
+  .modal-section .value {
+    font-size: .92rem; color: var(--text); line-height: 1.55;
+  }
+  .modal-section a.value {
+    color: var(--gold-light); text-decoration: none;
+    border-bottom: 1px dashed rgba(212,160,23,.4);
+  }
+  .modal-section a.value:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .social-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .35rem; }
+  .social-link {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem; letter-spacing: .12em;
+    color: var(--gold);
+    text-decoration: none; text-transform: uppercase;
+    padding: .35rem .8rem;
+    border: 1px solid rgba(212,160,23,.25);
+    border-radius: 3px;
+    transition: all .25s;
+  }
+  .social-link:hover {
+    color: #0a0804; background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 0 14px rgba(212,160,23,.4);
+  }
+
+  @keyframes modal-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes modal-pop {
+    from { opacity: 0; transform: translateY(12px) scale(.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @media (max-width: 480px) {
+    .modal { padding: 1rem; }
+    .modal-box { padding: 1.6rem 1.2rem 1.4rem; }
+    .modal-title { font-size: 1.2rem; }
+    .modal-section .value { font-size: .88rem; }
   }
 </style>
 
@@ -579,7 +772,16 @@
      ============================================================ -->
 <nav>
   <span class="nav-brand">Codexia</span>
-  <ul class="nav-links">
+  <!-- Botão hambúrguer: visível apenas em telas pequenas (≤ 720px).
+       O JS alterna o texto entre ☰ (fechado) e ✕ (aberto). -->
+  <button
+    class="nav-toggle"
+    id="nav-toggle"
+    type="button"
+    aria-label="Abrir menu"
+    aria-controls="nav-links"
+    aria-expanded="false">☰</button>
+  <ul class="nav-links" id="nav-links">
     <li><a href="#sobre-jogo">O Jogo</a></li>   <!-- Rola para #sobre-jogo -->
     <li><a href="#devs">Devs</a></li>            <!-- Rola para #devs -->
     <li><a href="#sobre-nos">Estúdio</a></li>    <!-- Rola para #sobre-nos -->
@@ -867,10 +1069,12 @@
           <li><span class="v-icon">🌍</span><span>Comunidade aberta — crescemos com e para quem joga e desenvolve.</span></li>
         </ul>
 
-        <!-- Botões de Download e Contato -->
+        <!-- Botões de Download e Contato.
+             O botão "Contato" é um <button> com data-open="contato",
+             lido pelo JS para abrir o modal #contato-modal. -->
         <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
           <a href="CODEXIA_game/codexia.html" class="btn btn-outline" style="font-size:.75rem; padding:.65rem 1.5rem;">🌐 Download</a>
-          <a href="#" class="btn btn-outline" style="font-size:.75rem; padding:.65rem 1.5rem;">📧 Contato</a>
+          <button type="button" class="btn btn-outline" data-open="contato" style="font-size:.75rem; padding:.65rem 1.5rem;">📧 Contato</button>
         </div>
       </div>
     </div>
@@ -912,7 +1116,95 @@
      1. Criação das partículas de brasa
      2. Animação de reveal por scroll
      3. Mudança de fundo da nav ao rolar
+     4. Menu hambúrguer (nav mobile)
+     5. Modal de contato
      ============================================================ -->
+
+<!-- ============================================================
+     MODAL DE CONTATO (#contato-modal)
+     Popup acionado por qualquer elemento com data-open="contato".
+     Estrutura:
+       .modal               → container fullscreen (oculto por padrão)
+         .modal-backdrop    → fundo escurecido com blur
+         .modal-box         → caixa central com as informações
+           .modal-close     → botão "✕" para fechar
+           cabeçalho        → subtítulo + título + divisor dourado
+           .modal-section × N → blocos de e-mail, horário, redes, resposta
+
+     Acessibilidade:
+       role="dialog" + aria-modal="true" → identifica como diálogo modal
+       aria-labelledby                    → aponta para o título
+       aria-hidden                        → alternado pelo JS (true/false)
+
+     IMPORTANTE: este bloco precisa vir ANTES do <script> abaixo,
+     pois o script referencia #contato-modal já no carregamento.
+     ============================================================ -->
+<div class="modal" id="contato-modal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="contato-title" aria-hidden="true">
+
+  <!-- Fundo escurecido (clicar nele fecha o modal) -->
+  <div class="modal-backdrop"></div>
+
+  <!-- Caixa principal do modal -->
+  <div class="modal-box">
+
+    <!-- Botão de fechar no canto superior direito -->
+    <button type="button" class="modal-close" aria-label="Fechar">✕</button>
+
+    <!-- Cabeçalho -->
+    <p class="modal-subtitle">◆ &nbsp; Fale Conosco</p>
+    <h3 class="modal-title" id="contato-title">Contato</h3>
+    <div class="gold-divider" style="margin: 1.2rem auto 1rem;"></div>
+
+    <!-- Bloco: E-mail
+         Substitua pelo e-mail oficial do estúdio quando disponível. -->
+    <div class="modal-section">
+      <span class="icon">📧</span>
+      <div>
+        <p class="label">E-mail</p>
+        <a class="value" href="mailto:contato@minicodestudio.com">contato@minicodestudio.com</a>
+      </div>
+    </div>
+
+    <!-- Bloco: Horário de atendimento -->
+    <div class="modal-section">
+      <span class="icon">🕐</span>
+      <div>
+        <p class="label">Horário de Atendimento</p>
+        <p class="value">
+          Segunda a Sexta — 09h às 18h (BRT)<br/>
+          Sábados — 09h às 13h
+        </p>
+      </div>
+    </div>
+
+    <!-- Bloco: Redes Sociais
+         Os href são placeholders ("#"); troque pelos links reais. -->
+    <div class="modal-section">
+      <span class="icon">🌐</span>
+      <div>
+        <p class="label">Redes Sociais</p>
+        <div class="social-row">
+          <a class="social-link" href="#" target="_blank" rel="noopener">Instagram</a>
+          <a class="social-link" href="#" target="_blank" rel="noopener">Twitter / X</a>
+          <a class="social-link" href="#" target="_blank" rel="noopener">YouTube</a>
+          <a class="social-link" href="#" target="_blank" rel="noopener">Discord</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloco: Tempo de resposta -->
+    <div class="modal-section">
+      <span class="icon">⏱</span>
+      <div>
+        <p class="label">Tempo de Resposta</p>
+        <p class="value">Respondemos em até <strong style="color:var(--gold-light)">24 horas</strong> úteis.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <script>
   // ============================================================
@@ -987,6 +1279,88 @@
     nav.style.background = window.scrollY > 60
       ? 'rgba(10,8,4,.96)'                               // Fundo sólido escuro ao rolar
       : 'linear-gradient(to bottom, rgba(10,8,4,.95), transparent)'; // Gradiente original
+  });
+
+  // ============================================================
+  // 4. MENU HAMBÚRGUER (NAV MOBILE)
+  // Em telas pequenas o botão #nav-toggle aparece e ao clicar
+  // alterna a classe .open na lista de links, exibindo/ocultando
+  // o painel suspenso. Fecha automaticamente quando:
+  //   - clica em qualquer link da lista
+  //   - clica fora da nav
+  //   - pressiona Esc
+  // ============================================================
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks  = document.getElementById('nav-links');
+
+  // Função utilitária para fechar o menu
+  function closeNav () {
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.innerHTML = '☰';
+  }
+
+  // Abre/fecha ao clicar no botão hambúrguer
+  navToggle.addEventListener('click', (ev) => {
+    ev.stopPropagation();                            // Evita que o "clicar fora" feche logo em seguida
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    navToggle.innerHTML = isOpen ? '✕' : '☰';        // Troca o ícone visual
+  });
+
+  // Fecha ao clicar em qualquer link interno
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+  // Fecha ao clicar fora da nav
+  document.addEventListener('click', (ev) => {
+    if (navLinks.classList.contains('open') && !ev.target.closest('nav')) closeNav();
+  });
+
+  // ============================================================
+  // 5. MODAL DE CONTATO
+  // Acionado por qualquer elemento com data-open="contato".
+  // Abre o popup #contato-modal, bloqueia o scroll do body e
+  // habilita fechamento por: botão "✕", clique no fundo (backdrop)
+  // e tecla Esc. Devolve o foco ao botão que abriu o modal ao
+  // fechá-lo (acessibilidade).
+  // ============================================================
+  const contatoModal    = document.getElementById('contato-modal');
+  const contatoBackdrop = contatoModal.querySelector('.modal-backdrop');
+  const contatoClose    = contatoModal.querySelector('.modal-close');
+  let   contatoTrigger  = null;                     // Guarda o elemento que abriu o modal
+
+  // Abre o modal
+  function openContato (trigger) {
+    contatoTrigger = trigger || null;
+    contatoModal.classList.add('open');
+    contatoModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';        // Trava o scroll da página
+    setTimeout(() => contatoClose.focus(), 50);     // Move o foco para o "✕"
+  }
+
+  // Fecha o modal
+  function closeContato () {
+    contatoModal.classList.remove('open');
+    contatoModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';              // Libera o scroll
+    if (contatoTrigger && typeof contatoTrigger.focus === 'function') {
+      contatoTrigger.focus();                       // Devolve o foco ao botão original
+    }
+  }
+
+  // Liga todos os gatilhos data-open="contato"
+  document.querySelectorAll('[data-open="contato"]').forEach(btn => {
+    btn.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      openContato(btn);
+    });
+  });
+
+  // Fechamento: botão X, clique no backdrop e tecla Esc
+  contatoClose.addEventListener('click', closeContato);
+  contatoBackdrop.addEventListener('click', closeContato);
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && contatoModal.classList.contains('open')) closeContato();
   });
 </script>
 </body>
