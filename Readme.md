@@ -18,7 +18,7 @@
 | **Modo de aprendizado** | Cada puzzle introduz um conceito de programação que deve ser aplicado para avançar. |
 | **Plataformas** | Windows, Linux, macOS (suporte via canvas HTML5). |
 | **Público-alvo** | Crianças (8 +), adolescentes e adultos que desejam aprender programação de forma divertida. |
-| **Desenvolvedores** | **Karina** (Game Designer) e **Guilherme Rangel de Lima** (Lead Dev) – MiniCode Studio. |
+| **Desenvolvedores** | **Karina de Souza Pompeu** (Game Designer) e **Guilherme Rangel de Lima** (Lead Dev) – MiniCode Studio. |
 | **Motivação** | Mostrar que programar pode ser tão divertido quanto jogar um game; reforçar a importância do pensamento computacional. |
 | **Licença** | Licença proprietária da MiniCode Studio (todos os direitos reservados). |
 
@@ -33,7 +33,7 @@ A **MiniCode Studio** nasceu da paixão de um grupo de desenvolvedores que cresc
          • Implantação de mecânicas de código
          • Implementação do modal de contato
          • Beta aberta: a aplicação entra em fase de testes com a comunidade.
-- 2025 (Q3) – Lançamento da demo playable no site oficial (https://www.minicodestudio.com) e abertura oficial do
+- 2025 (Q3) – Lançamento da demo playable no site oficial (https://minicodestudio.netlify.app/) e abertura oficial do
 repositório público no GitHub.
 -------------------------------------
 Destaques da versão beta (2025):
@@ -105,7 +105,7 @@ CODEXIA_game/
 ## 📣 Contato
 
 - **Botão “Contato”** (modal) abre um popup onde o usuário pode enviar mensagens, obter e‑mail ou visitar o Instagram da MiniCode Studio.  
-- **E‑mail**: contato@minicodestudio.com (via modal).  
+- **E‑mail**: minecode.studio@gmail.com (via modal).  
 - **Instagram**: https://www.instagram.com/minicode_studio/  
 
 > **Observação:** O modal bloqueia o scroll da página principal e captura o foco no botão que o abriu, devolvendo‑o ao fechar.
@@ -121,7 +121,7 @@ CODEXIA_game/
 2. **Passos**  
    1. Clone ou baixe o repositório:  
       ```bash
-      git clone https://github.com/MiniCodeStudio/Codexia.git
+      git clone https://github.com/Nasa-yz/Codexia.git
       ```  
    2. Abra o arquivo `index.html` no navegador (ou sirva a pasta com um servidor local, ex.: `python -m http.server`).  
    3. Clique no botão **“🌐 Teste o Jogo”** para carregar a experiência interativa.  
@@ -180,15 +180,15 @@ Todo o conteúdo (arte, código, documentação) é **proprietário da MiniCode 
 ## 📞 Suporte / Contribuições
 
 - **Reportar bugs** → abra *issue* no GitHub.  
-- **Solicitar novas funcionalidades** → também via *issue* ou enviando e‑mail para **contato@minicodestudio.com**.  
+- **Solicitar novas funcionalidades** → também via *issue* ou enviando e‑mail para **minecode.studio@gmail.com**.  
 - **Contribuir com código** → fork o repo, crie branch, siga as convenções de commit (`feature/`, `bugfix/`).  
 
 ---
 
 ## 📚 Referências & Links Úteis
 
-- **Site oficial**: https://www.minicodestudio.com  
-- **GitHub**: https://github.com/MiniCodeStudio/Codexia  
+- **Site oficial**: https://minicodestudio.netlify.app/ 
+- **GitHub**: https://github.com/Nasa-yz/Codexia.git  
 - **Linear (Issue Tracker)**: *Ainda a ser implementado* (acesso mediante convite)  
 - **Documentação oficial do projeto:** https://docs.google.com/document/d/1JBmHoCgRKxEzIa-vrXTxr0t6LYkuzkGWLI3VMPkmBfQ/edit?usp=sharing
 - **Documentação do GameMaker → HTML5**: https://www.yoyogames.com/en/help/GM_STUDIO_2/HTML5  

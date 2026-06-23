@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     CODEXIA — MINICODE STUDIO
+     Página de Agradecimento pela Demo
+     ============================================================
+     ESTRUTURA GERAL DO ARQUIVO:
+     ├── <head>  → Configurações, fontes e todos os estilos CSS
+     └── <body>  → Conteúdo visual da página
+         ├── <nav>         → Barra de navegação fixa no topo
+         ├── .embers       → Container das partículas de brasa (fundo animado)
+         ├── #hero         → Seção principal com a mensagem de agradecimento
+         ├── #agradecimentos → Seção com créditos aos orientadores
+         └── <footer>      → Rodapé com copyright
+
+     ESTA PÁGINA FOI CRIADA COMO EXTENSÃO DO SITE PRINCIPAL.
+     Mantém todas as variáveis CSS, fontes, animações e padrões
+     visuais do index.html original, mas apresenta conteúdo novo.
+     ============================================================ -->
+<html lang="pt-BR">
+<!-- lang="pt-BR" informa ao navegador que o idioma é Português do Brasil -->
+<head>
+
+  <!-- ============================================================
+       BLOCO <head>: METADADOS E CONFIGURAÇÕES
+       Tudo aqui é invisível ao usuário, mas essencial para que
+       o site funcione corretamente em diferentes dispositivos.
+       ============================================================ -->
+
+  <!-- UTF-8 garante que acentos e cedilhas apareçam corretamente -->
+  <meta charset="UTF-8"/>
+
+  <!-- Viewport: faz o site se adaptar ao tamanho da tela do dispositivo
+       width=device-width → usa a largura real do dispositivo
+       initial-scale=1.0  → sem zoom inicial -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Título que aparece na aba do navegador -->
+  <title>Obrigado por Jogar — Codexia</title>
+
+  <!-- Importação das fontes do Google Fonts.
+       São as mesmas três famílias usadas no site principal:
+       1. "Cinzel Decorative" (pesos 700 e 900) → títulos grandes e logo
+       2. "Cinzel" (pesos 400 e 600) → subtítulos, nav e textos decorativos
+       3. "Lato" (pesos 300, 400 e 700) → texto corrido do site
+       "display=swap" permite que o texto apareça antes das fontes carregarem -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+
+<style>
+  /* ============================================================
+     VARIÁVEIS CSS (:root)
+     Centraliza todas as cores do site em um único lugar.
+     Basta mudar aqui para alterar a cor em todo o site.
+     A sintaxe "var(--nome-da-variavel)" usa o valor definido aqui.
+     ============================================================ */
+  :root {
+    --gold:      #d4a017; /* Dourado principal — usado em bordas e ícones */
+    --gold-light:#f0c040; /* Dourado claro — usado em títulos e destaques */
+    --gold-dim:  #8a6510; /* Dourado escuro/apagado — bordas sutis */
+    --dark:      #0a0804; /* Preto-quente principal — fundo da página */
+    --dark2:     #140e06; /* Variação do fundo escuro */
+    --dark3:     #1e1508; /* Terceira variação do fundo escuro */
+    --navy:      #151c2e; /* Azul marinho — usado em seções especiais */
+    --navy2:     #1f2d4a; /* Segunda variação do azul marinho */
+    --parchment: #c9a96e; /* Pergaminho — cor quente para taglines */
+    --ember:     #b84a00; /* Brasa/laranja — cor das partículas animadas */
+    --text:      #e8d5a3; /* Creme — cor principal do texto corrido */
+    --muted:     #8a7a5a; /* Marrom acinzentado — texto secundário/silenciado */
+  }
+
+  /* ============================================================
+     RESET CSS
+     Remove margens e paddings padrão do navegador para que
+     o layout fique consistente em todos os browsers.
+     "box-sizing: border-box" faz com que padding e border
+     sejam incluídos no tamanho total do elemento.
+     ============================================================ */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Impede seleção de texto em elementos estruturais
+     para manter a experiência de jogo/aplicativo */
+  body, h1, h2, h3, p, li, span, section, nav, footer, div {
+    user-select: none;
+    -webkit-user-select: none; /* Prefixo para Safari/iOS */
+  }
+
+  /* Libera seleção e define cursor de clique apenas em elementos interativos */
+  a, button, input, textarea {
+    cursor: pointer;
+    user-select: auto;
+    -webkit-user-select: auto;
+  }
+
+  /* Rolagem suave ao clicar em links de âncora (#section) */
+  html { scroll-behavior: smooth; }
+
+  /* ============================================================
+     ESTILOS DO BODY
+     Define o visual base de toda a página.
+     ============================================================ */
+  body {
+    background: var(--dark);       /* Fundo preto-quente */
+    color: var(--text);            /* Texto creme */
+    font-family: 'Lato', sans-serif; /* Fonte padrão para texto corrido */
+    overflow-x: hidden;            /* Esconde qualquer overflow horizontal */
+    cursor: default;
+  }
+
+  /* ============================================================
+     SOBREPOSIÇÃO DE RUÍDO (body::before)
+     Adiciona uma textura de "papel envelhecido" ou "película"
+     por cima de toda a página usando um SVG embutido como
+     imagem de fundo.
+     position: fixed → fica fixo na tela mesmo ao rolar
+     pointer-events: none → não interfere em cliques
+     z-index: 999 → fica quase no topo da pilha de camadas
+     ============================================================ */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; /* inset: 0 = top/right/bottom/left: 0 */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: .4;
+  }
+
+  /* ============================================================
+     ─── NAVEGAÇÃO ───
+     Barra fixa no topo da página.
+     "position: fixed" a mantém visível mesmo ao rolar.
+     "backdrop-filter: blur" cria um efeito de vidro fosco.
+     ============================================================ */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 4rem;
+    background: linear-gradient(to bottom, rgba(10,8,4,.95), transparent);
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid rgba(212,160,23,.15); /* Linha dourada sutil embaixo */
+  }
+
+  /* Logo/nome na nav — usa fonte Cinzel serifada com cor dourada */
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    letter-spacing: .15em; /* Espaçamento entre letras */
+  }
+
+  /* Lista de links da navegação */
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+
+  /* Estilo base de cada link da nav */
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: .8rem;
+    letter-spacing: .12em;
+    color: var(--muted); /* Começa apagado */
+    text-decoration: none;
+    text-transform: uppercase; /* MAIÚSCULAS */
+    transition: color .3s; /* Animação suave ao passar o mouse */
+  }
+
+  /* Ao passar o mouse, o link fica dourado brilhante */
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* ============================================================
+     ─── MENU HAMBÚRGUER (MOBILE) ───
+     O botão ☰ só aparece em telas pequenas.
+     Em desktop ele fica oculto (display: none).
+     ============================================================ */
+  .nav-toggle {
+    display: none; /* Invisível em desktop */
+    background: transparent;
+    border: 1px solid rgba(212,160,23,.3);
+    color: var(--gold);
+    font-size: 1.2rem; line-height: 1;
+    padding: .4rem .65rem;
+    border-radius: 3px;
+    transition: border-color .3s, background .3s;
+  }
+  .nav-toggle:hover {
+    border-color: var(--gold);
+    background: rgba(212,160,23,.08);
+  }
+
+  /* ============================================================
+     ─── PARTÍCULAS DE BRASA (EMBERS) ───
+     Container fixo que ocupa toda a tela.
+     As partículas individuais (.ember) são criadas pelo JavaScript
+     ao final da página e inseridas aqui.
+     ============================================================ */
+  .embers {
+    position: absolute; inset: 0;
+    pointer-events: none; /* Não interfere em cliques */
+    overflow: hidden;
+  }
+
+  /* Estilo de uma única partícula de brasa */
+  .ember {
+    position: absolute; bottom: -10px;
+    width: 3px; height: 3px;
+    border-radius: 50%; /* Círculo perfeito */
+    background: var(--gold-light);
+    box-shadow: 0 0 6px 2px rgba(240,192,64,.6); /* Brilho ao redor */
+    animation: rise linear infinite; /* Animação de subida definida abaixo */
+    opacity: 0; /* Começa invisível; a animação controla isso */
+  }
+
+  /* Keyframes: define os "quadros" da animação das brasas subindo
+     --dx é uma variável CSS definida via JS para cada partícula,
+     criando um desvio horizontal aleatório e único */
+  @keyframes rise {
+    0%   { transform: translateY(0) translateX(0) scale(1); opacity: .8; }
+    60%  { opacity: .5; }
+    100% { transform: translateY(-110vh) translateX(var(--dx)) scale(.3); opacity: 0; }
+  }
+
+  /* ============================================================
+     ─── SEÇÃO HERO (AGRADECIMENTO PRINCIPAL) ───
+     Ocupa 100% da altura da tela (100vh).
+     Centraliza o conteúdo vertical e horizontalmente.
+     O fundo usa múltiplos gradientes radiais e lineares
+     sobrepostos para criar profundidade.
+     ============================================================ */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    text-align: center;
+    padding: 2rem;
+    /* Gradientes de fundo sobrepostos — o CSS lê de cima para baixo
+       e renderiza do topo para o fundo da pilha */
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 60%, rgba(180,100,0,.25) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 80%, rgba(212,160,23,.12) 0%, transparent 60%),
+      linear-gradient(180deg, #0a0804 0%, #140e06 50%, #0d0a04 100%);
+  }
+
+  /* ── Ícone decorativo grande acima do título ── */
+  .hero-icon {
+    font-size: clamp(3rem, 8vw, 5rem); /* Tamanho responsivo: mínimo 3rem, máximo 5rem */
+    margin-bottom: 1.5rem;
+    /* Filtro de brilho dourado, pulsando com a animação "pulse-glow" */
+    filter: drop-shadow(0 0 20px rgba(212,160,23,.7));
+    animation: pulse-glow 3s ease-in-out infinite alternate, fadeUp .9s ease both;
+    display: block;
+  }
+
+  /* Animação de pulso de brilho — alternada para criar efeito de respiração */
+  @keyframes pulse-glow {
+    from { filter: drop-shadow(0 0 15px rgba(212,160,23,.5)); }
+    to   { filter: drop-shadow(0 0 40px rgba(212,160,23,.9)); }
+  }
+
+  /* ── Título principal da seção hero ── */
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif; /* Fonte decorativa para impacto */
+    font-size: clamp(1.8rem, 5vw, 3.5rem);   /* Responsivo: se ajusta à largura da tela */
+    color: var(--gold-light);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    /* fadeUp: aparece subindo com fade ao carregar a página */
+    animation: fadeUp .9s .2s ease both; /* delay de .2s antes de começar */
+  }
+
+  /* ── Divisor dourado centralizado ── */
+  .gold-divider {
+    width: 80px; height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 1.5rem auto 2rem; /* "auto" nas laterais centraliza o elemento */
+  }
+
+  /* ── Parágrafo de agradecimento ── */
+  .hero-message {
+    font-size: clamp(1rem, 2.5vw, 1.3rem); /* Responsivo */
+    line-height: 1.85; /* Espaçamento entre linhas para boa leitura */
+    color: var(--text);
+    font-weight: 300; /* Leve/fino */
+    max-width: 680px; /* Limita a largura para não esticar demais em telas grandes */
+    margin: 0 auto;
+    animation: fadeUp .9s .4s ease both; /* delay de .4s */
+  }
+
+  /* ── Texto de ação pós-agradecimento ── */
+  .hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: .85rem;
+    letter-spacing: .2em;
+    color: var(--parchment);
+    text-transform: uppercase;
+    margin-top: 2.5rem;
+    animation: fadeUp .9s .6s ease both; /* delay de .6s, aparece por último */
+  }
+
+  /* ── Botão de volta ao site ── */
+  .hero-cta {
+    margin-top: 2rem;
+    animation: fadeUp .9s .8s ease both;
+  }
+
+  /* Estilo base para botões */
+  .btn {
+    font-family: 'Cinzel', serif;
+    font-size: .85rem;
+    letter-spacing: .15em;
+    padding: .85rem 2.2rem;
+    border-radius: 3px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all .3s; /* Transição suave em todas as propriedades */
+  }
+
+  /* Botão primário — fundo dourado */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    color: #0a0804; /* Texto escuro sobre fundo claro */
+    border: none;
+    box-shadow: 0 0 20px rgba(212,160,23,.4);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    box-shadow: 0 0 40px rgba(212,160,23,.7);
+    transform: translateY(-2px); /* Sobe 2px ao passar o mouse */
+  }
+
+  /* Animação de entrada — sobe de baixo com fade */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============================================================
+     ─── SEÇÃO DE AGRADECIMENTOS ESPECIAIS (#agradecimentos) ───
+     Aparece abaixo do hero com fundo levemente diferente.
+     ============================================================ */
+  #agradecimentos {
+    padding: 6rem 2rem;
+    background:
+      linear-gradient(180deg, var(--dark) 0%, var(--dark2) 50%, var(--dark) 100%);
+    position: relative;
+  }
+
+  /* Linha vertical decorativa na borda esquerda da seção
+     Criada com "::before" (pseudo-elemento) — não precisa de HTML extra */
+  #agradecimentos::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+  }
+
+  /* Contêiner interno com largura máxima para não esticar em telas grandes */
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto; /* Centraliza horizontalmente */
+  }
+
+  /* Rótulo pequeno acima do título da seção */
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem;
+    letter-spacing: .4em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: .75rem;
+  }
+
+  /* Título principal da seção */
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    color: var(--gold-light);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── Grid de cartões de agradecimento ──
+     "repeat(auto-fit, minmax(280px, 1fr))" cria colunas automáticas:
+     - cada coluna tem no mínimo 280px
+     - se sobrar espaço, divide igualmente (1fr)
+     - o navegador decide quantas colunas cabem */
+  .thanks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  /* Cartão individual de cada agradecimento */
+  .thanks-card {
+    background: rgba(255,255,255,.025); /* Branco levíssimo semitransparente */
+    border: 1px solid rgba(212,160,23,.12);
+    border-radius: 4px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all .35s; /* Transição suave em hover */
+    position: relative; overflow: hidden;
+  }
+
+  /* Linha dourada no topo do cartão — aparece só no hover */
+  .thanks-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+    opacity: 0; /* Invisível por padrão */
+    transition: opacity .35s;
+  }
+
+  /* Ao passar o mouse: levanta, adiciona sombra e borda dourada */
+  .thanks-card:hover {
+    border-color: var(--gold-dim);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,.5);
+  }
+
+  /* Linha dourada aparece ao hover */
+  .thanks-card:hover::before { opacity: 1; }
+
+  /* Ícone/emoji grande dentro do cartão */
+  .thanks-icon {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: drop-shadow(0 0 8px rgba(212,160,23,.4));
+  }
+
+  /* Nome da pessoa agradecida */
+  .thanks-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    letter-spacing: .08em;
+    margin-bottom: .35rem;
+  }
+
+  /* Cargo/função da pessoa */
+  .thanks-role {
+    font-size: .72rem;
+    letter-spacing: .18em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    font-family: 'Cinzel', serif;
+  }
+
+  /* ── Texto de agradecimento (menor) ──
+     Este é o texto mais importante desta seção.
+     Ele aparece em tamanho reduzido para destacar o título,
+     mas mantém boa legibilidade com line-height generoso. */
+  .thanks-text {
+    font-size: .87rem;  /* Menor que o texto normal (.body-text usa 1.05rem) */
+    line-height: 1.75;  /* Espaçamento generoso para facilitar leitura */
+    color: var(--muted); /* Tom mais apagado que o texto principal */
+    font-weight: 400;
+  }
+
+  /* ============================================================
+     ─── CLASSE .reveal (ANIMAÇÃO DE SCROLL) ───
+     Elementos com essa classe começam invisíveis e transladam
+     para baixo. O JavaScript os torna visíveis quando entram
+     no campo de visão do usuário (viewport).
+     ============================================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px); /* Começa 30px abaixo da posição final */
+    transition: opacity .8s ease, transform .8s ease;
+  }
+
+  /* Estado após o JS adicionar a classe .visible */
+  .reveal.visible {
+    opacity: 1;
+    transform: none; /* Volta à posição original */
+  }
+
+  /* ============================================================
+     ─── RODAPÉ ───
+     Área inferior com logo, links e copyright.
+     ============================================================ */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid rgba(212,160,23,.1);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  /* Nome do estúdio no rodapé */
+  .footer-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.2rem;
+    color: var(--gold-dim);
+    margin-bottom: .5rem;
+  }
+
+  /* Tagline abaixo do logo no rodapé */
+  .footer-sub {
+    font-size: .8rem;
+    color: var(--muted);
+    letter-spacing: .1em;
+  }
+
+  /* Lista de links no rodapé */
+  .footer-links {
+    display: flex; justify-content: center; gap: 2rem;
+    margin: 1.5rem 0; list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem; letter-spacing: .15em;
+    color: var(--muted); text-decoration: none;
+    text-transform: uppercase; transition: color .3s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  /* Texto de copyright */
+  .footer-copy {
+    font-size: .75rem;
+    color: rgba(138,122,90,.5);
+    margin-top: 1rem;
+  }
+
+  /* ============================================================
+     ─── RESPONSIVIDADE (Media Queries) ───
+     Adapta o layout para diferentes tamanhos de tela.
+     Usamos breakpoints (pontos de quebra) em 720px e 480px.
+     ============================================================ */
+
+  /* Tablets e celulares (telas até 720px) */
+  @media (max-width: 720px) {
+
+    /* Mostra o botão hambúrguer em mobile */
+    .nav-toggle { display: inline-block; }
+
+    /* Links da nav viram um menu suspenso */
+    .nav-links {
+      position: absolute; top: 100%; right: 1rem;
+      flex-direction: column; gap: 0;
+      background: rgba(10,8,4,.97);
+      border: 1px solid rgba(212,160,23,.25);
+      border-radius: 4px; padding: .5rem 0;
+      min-width: 180px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.5);
+      display: none; /* Fechado por padrão, abre com JS */
+    }
+    .nav-links.open { display: flex; } /* JS adiciona .open ao clicar em ☰ */
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: .8rem 1.4rem; font-size: .8rem; }
+    .nav-links a:hover { background: rgba(212,160,23,.08); }
+
+    /* Reduz padding nas seções */
+    #agradecimentos { padding: 4rem 1.25rem; }
+
+    /* Nav com menos padding */
+    nav { padding: 1rem 1.5rem; }
+
+    /* Grid de cartões vira coluna única */
+    .thanks-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Celulares pequenos (telas até 480px) */
+  @media (max-width: 480px) {
+    nav { padding: .8rem 1rem; }
+    .nav-brand { font-size: 1rem; }
+    #agradecimentos { padding: 3.5rem 1rem; }
+    .section-title { font-size: clamp(1.4rem, 6vw, 1.9rem); }
+    footer { padding: 2rem 1rem; }
+    .footer-links { flex-wrap: wrap; gap: 1rem 1.5rem; }
+  }
+
+</style>
+
+</head>
+<body>
+
+<!-- ============================================================
+     INÍCIO DO <body> — CONTEÚDO VISÍVEL DA PÁGINA
+
+     Ordem dos blocos:
+     1. <nav>              → Barra de navegação fixa no topo
+     2. #hero              → Seção de agradecimento principal (capa)
+     3. #agradecimentos    → Créditos aos orientadores (com cartões)
+     4. <footer>           → Rodapé
+     5. <script>           → JavaScript ao final (boa prática: carrega depois do HTML)
+     ============================================================ -->
+
+<!-- ============================================================
+     NAV — BARRA DE NAVEGAÇÃO FIXA
+     Idêntica à do site principal.
+     Os links levam de volta ao index e às seções dele.
+     ============================================================ -->
+<nav>
+
+  <!-- Logo textual — clicável para voltar ao início -->
+  <a href="index.html" class="nav-brand" style="text-decoration:none;">Codexia</a>
+
+  <!-- Botão hambúrguer — só aparece em telas pequenas (via CSS media query)
+       O JS alterna o texto entre ☰ (fechado) e ✕ (aberto)
+       aria-expanded → informa leitores de tela se o menu está aberto
+       aria-controls → diz qual elemento este botão controla -->
+  <button
+    class="nav-toggle"
+    id="nav-toggle"
+    type="button"
+    aria-label="Abrir menu"
+    aria-controls="nav-links"
+    aria-expanded="false">
+    ☰
+  </button>
+
+  <!-- Lista de links de navegação
+       id="nav-links" → referenciado pelo botão hambúrguer e pelo JS -->
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="index.html#sobre-jogo">O Jogo</a></li>
+    <li><a href="index.html#devs">Equipe</a></li>
+    <li><a href="CODEXIA_game/codexia.html">Jogar</a></li>
+  </ul>
+
+</nav>
+
+<!-- ============================================================
+     SEÇÃO HERO — MENSAGEM PRINCIPAL DE AGRADECIMENTO
+     Ocupa 100% da altura da tela.
+     Contém: ícone, título, divisor dourado, mensagem e botão.
+     ============================================================ -->
+<section id="hero">
+
+  <!-- Container de brasas — as partículas são geradas pelo JS abaixo
+       e inseridas aqui. Ficam animadas em loop contínuo. -->
+  <div class="embers" id="embers"></div>
+
+  <!-- Ícone decorativo (emoji) — tamanho grande, com brilho animado -->
+  <span class="hero-icon" aria-hidden="true">✨</span>
+  <!-- aria-hidden="true" → leitores de tela ignoram elementos puramente decorativos -->
+
+  <!-- Título principal da página -->
+  <h1 class="hero-title">Obrigado por Jogar!</h1>
+
+  <!-- Divisor decorativo dourado -->
+  <div class="gold-divider"></div>
+
+  <!-- Mensagem de agradecimento pela demo
+       "clamp()" no CSS garante que o tamanho se adapte à tela -->
+  <p class="hero-message">
+    Agradecemos de coração por ter jogado a demo de <strong style="color: var(--gold-light);">Codexia</strong>.
+    Sua experiência é fundamental para nós. Cada passo que você deu no mundo do Código foi
+    importante para mostrarmos que aprender programação pode ser uma aventura incrível.
+    Esperamos que você tenha se encantado tanto quanto nós nos encantamos ao criar este universo.
+  </p>
+
+  <!-- Texto menor abaixo da mensagem principal -->
+  <p class="hero-sub">A aventura está apenas começando</p>
+
+  <!-- Botão de volta ao site principal -->
+  <div class="hero-cta">
+    <a href="index.html" class="btn btn-primary">Voltar ao Site</a>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     SEÇÃO DE AGRADECIMENTOS ESPECIAIS
+     Apresenta em cartões as pessoas que contribuíram com o projeto.
+     Cada cartão tem: ícone, nome, cargo e uma mensagem.
+
+     A classe "reveal" faz os cartões aparecerem com animação
+     quando o usuário rola a página até eles (via IntersectionObserver no JS).
+     ============================================================ -->
+<section id="agradecimentos">
+  <div class="section-inner">
+
+    <!-- Rótulo pequeno acima do título -->
+    <p class="section-label reveal">Reconhecimentos Especiais</p>
+
+    <!-- Título da seção -->
+    <h2 class="section-title reveal">Com Gratidão</h2>
+
+    <!-- Divisor dourado -->
+    <div class="gold-divider reveal"></div>
+
+    <!-- Texto de agradecimento geral em tamanho menor
+         Este é o texto pedido no briefing, apresentado de forma elegante
+         antes dos cartões individuais -->
+    <p class="reveal" style="
+      font-size: .92rem;
+      line-height: 1.85;
+      color: var(--text);
+      font-weight: 300;
+      max-width: 820px;
+      margin-bottom: 3rem;
+    ">
+      Agradecemos imensamente à nossa orientadora
+      <strong style="color: var(--gold-light);">Anne Caroline Velloso Torres</strong>,
+      por sua orientação, que foi de suma importância para o desenvolvimento deste projeto,
+      a desenvolvedora e empresária
+      <strong style="color: var(--gold-light);">Fabiana Raulino</strong>
+      que trouxe um amplo conhecimento sobre desenvolvimento e o mercado de jogos,
+      e a psicopedagoga
+      <strong style="color: var(--gold-light);">Samanta Faria</strong>
+      por sua consultoria sobre desenvolvimento e aprendizado infantil.
+    </p>
+
+    <!-- Grid de cartões — layout automático definido pelo CSS -->
+    <div class="thanks-grid">
+
+      <!-- ── CARTÃO 1: Anne Caroline ── -->
+      <div class="thanks-card reveal">
+        <!-- Ícone decorativo -->
+        <span class="thanks-icon" aria-hidden="true">🎓</span>
+        <!-- Nome -->
+        <p class="thanks-name">Anne Caroline Velloso Torres</p>
+        <!-- Cargo/função -->
+        <p class="thanks-role">Orientadora do Projeto</p>
+        <!-- Texto de agradecimento individual -->
+        <p class="thanks-text">
+          Sua orientação foi de suma importância para o desenvolvimento deste projeto.
+          Guiou nossa equipe com sabedoria e comprometimento em cada etapa do caminho.
+        </p>
+      </div>
+
+      <!-- ── CARTÃO 2: Fabiana Raulino ── -->
+      <div class="thanks-card reveal">
+        <span class="thanks-icon" aria-hidden="true">🎮</span>
+        <p class="thanks-name">Fabiana Raulino</p>
+        <p class="thanks-role">Desenvolvedora & Empresária</p>
+        <p class="thanks-text">
+          Trouxe um amplo conhecimento sobre desenvolvimento e o mercado de jogos,
+          abrindo nossos horizontes para as possibilidades do universo game dev.
+        </p>
+      </div>
+
+      <!-- ── CARTÃO 3: Samanta Faria ── -->
+      <div class="thanks-card reveal">
+        <span class="thanks-icon" aria-hidden="true">🧠</span>
+        <p class="thanks-name">Samanta Faria</p>
+        <p class="thanks-role">Psicopedagoga</p>
+        <p class="thanks-text">
+          Sua consultoria sobre desenvolvimento e aprendizado infantil foi essencial
+          para criarmos uma experiência educativa verdadeiramente eficaz e envolvente.
+        </p>
+      </div>
+
+    </div>
+    <!-- Fim do .thanks-grid -->
+
+  </div>
+  <!-- Fim do .section-inner -->
+</section>
+
+<!-- ============================================================
+     RODAPÉ
+     Área final da página com logo, links rápidos e copyright.
+     Idêntico ao do site principal.
+     ============================================================ -->
+<footer>
+
+  <!-- Nome do estúdio no rodapé -->
+  <p class="footer-logo">MiniCode Studio</p>
+
+  <!-- Tagline do estúdio -->
+  <p class="footer-sub">Onde o código encontra a aventura.</p>
+
+  <!-- Links rápidos do rodapé -->
+  <ul class="footer-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="index.html#sobre-jogo">O Jogo</a></li>
+    <li><a href="index.html#devs">Equipe</a></li>
+    <li><a href="CODEXIA_game/codexia.html">Jogar a Demo</a></li>
+  </ul>
+
+  <!-- Copyright — o símbolo © é a entidade HTML para © -->
+  <p class="footer-copy">© 2025 MiniCode Studio. Todos os direitos reservados.</p>
+
+</footer>
+
+<!-- ============================================================
+     BLOCO <script> — JAVASCRIPT
+     Posicionado ao final do <body> por boas práticas:
+     - O HTML já foi carregado antes de o JS rodar
+     - O usuário vê o conteúdo antes mesmo do JS estar pronto
+     ============================================================ -->
+<script>
+
+  // ============================================================
+  // 1. PARTÍCULAS DE BRASA (Embers)
+  //
+  // Cria 28 divs .ember dinamicamente e insere no container #embers.
+  // Cada partícula recebe propriedades aleatórias via estilo inline,
+  // garantindo que cada brasa tenha comportamento único.
+  //
+  // Math.random() → retorna um número entre 0 e 1 (ex: 0.734...)
+  // Multiplicando por um valor, obtemos um range: Math.random() * 100 → 0 a 100
+  // ============================================================
+
+  const embers = document.getElementById('embers'); // Referência ao container no HTML
+
+  for (let i = 0; i < 28; i++) { // Loop que cria 28 partículas (índice 0 até 27)
+
+    const e = document.createElement('div'); // Cria um novo elemento <div>
+    e.className = 'ember';                   // Aplica a classe CSS .ember (estilo de partícula)
+
+    // Define propriedades CSS inline, cada uma com valor aleatório
+    // Template literal (crase ` `) permite escrever strings de múltiplas linhas com variáveis
+    e.style.cssText = `
+      left: ${Math.random() * 100}%;              /* Posição horizontal aleatória: 0% a 100% */
+      --dx: ${(Math.random() - .5) * 120}px;      /* Desvio lateral: -60px a +60px */
+      animation-duration: ${4 + Math.random() * 6}s;  /* Duração: 4s a 10s */
+      animation-delay: ${Math.random() * 8}s;          /* Delay: 0s a 8s (início escalonado) */
+      width: ${2 + Math.random() * 3}px;          /* Largura: 2px a 5px */
+      height: ${2 + Math.random() * 3}px;         /* Altura: 2px a 5px */
+      opacity: 0;                                 /* Começa invisível; a animação CSS controla */
+    `;
+
+    embers.appendChild(e); // Insere a brasa dentro do container #embers no DOM
+  }
+
+  // ============================================================
+  // 2. ANIMAÇÃO DE REVEAL POR SCROLL (IntersectionObserver)
+  //
+  // O IntersectionObserver é uma API moderna do browser que avisa
+  // quando um elemento entra ou sai da área visível da tela (viewport).
+  //
+  // Por que usamos isso em vez de checar manualmente com scroll?
+  // → Mais eficiente: o browser decide quando chamar o callback,
+  //   sem custo de performance de ficar rodando código a cada scroll.
+  //
+  // Funcionamento:
+  // 1. Selecionamos todos os elementos com a classe .reveal
+  // 2. Criamos um Observer que monitora esses elementos
+  // 3. Quando 12% de um elemento fica visível (threshold: .12):
+  //    - Adicionamos .visible → dispara a transição CSS (fade + slide up)
+  //    - Paramos de observar (unobserve) → animação acontece só uma vez
+  // ============================================================
+
+  const reveals = document.querySelectorAll('.reveal'); // NodeList com todos os .reveal
+
+  const obs = new IntersectionObserver((entries) => {
+    // "entries" é um array de observações — um por elemento observado
+
+    entries.forEach(e => {
+      if (e.isIntersecting) {              // Se o elemento está (ao menos parcialmente) visível:
+        e.target.classList.add('visible'); // Adiciona .visible → ativa a transição CSS
+        obs.unobserve(e.target);           // Para de observar — animação ocorre só uma vez
+      }
+    });
+
+  }, { threshold: .12 }); // threshold: .12 → 12% do elemento deve estar visível para disparar
+
+  reveals.forEach(r => obs.observe(r)); // Começa a observar cada elemento .reveal
+
+  // ============================================================
+  // 3. FUNDO DA NAV AO ROLAR
+  //
+  // Quando o usuário rola mais de 60px, a nav fica com fundo
+  // sólido semiopaco para manter a legibilidade sobre qualquer conteúdo.
+  // Ao voltar ao topo, retorna ao gradiente fadeout original.
+  // ============================================================
+
+  const nav = document.querySelector('nav'); // Seleciona o elemento <nav>
+
+  window.addEventListener('scroll', () => {
+    // window.scrollY → quantos pixels o usuário rolou verticalmente
+    nav.style.background = window.scrollY > 60
+      ? 'rgba(10,8,4,.96)'                                         // Fundo sólido escuro
+      : 'linear-gradient(to bottom, rgba(10,8,4,.95), transparent)'; // Gradiente original
+  });
+
+  // ============================================================
+  // 4. MENU HAMBÚRGUER (NAV MOBILE)
+  //
+  // Em telas pequenas (≤720px via CSS), o botão #nav-toggle aparece.
+  // Ao clicar, a classe .open é alternada na lista de links,
+  // exibindo ou ocultando o painel suspenso.
+  //
+  // O menu fecha automaticamente quando:
+  //   - O usuário clica em qualquer link dentro do menu
+  //   - O usuário clica em qualquer área fora da nav
+  //   - O usuário pressiona a tecla Esc
+  // ============================================================
+
+  const navToggle = document.getElementById('nav-toggle'); // Botão ☰
+  const navLinks  = document.getElementById('nav-links');  // Lista de links
+
+  // Função reutilizável para fechar o menu
+  function closeNav() {
+    navLinks.classList.remove('open');                  // Remove .open → menu some
+    navToggle.setAttribute('aria-expanded', 'false');   // Atualiza acessibilidade
+    navToggle.innerHTML = '☰';                          // Restaura ícone de hambúrguer
+  }
+
+  // Abre/fecha ao clicar no botão hambúrguer
+  navToggle.addEventListener('click', (ev) => {
+    ev.stopPropagation(); // Evita que o evento chegue ao document (que fecharia o menu logo)
+
+    const isOpen = navLinks.classList.toggle('open'); // toggle → adiciona se não tem, remove se tem
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    navToggle.innerHTML = isOpen ? '✕' : '☰'; // ✕ quando aberto, ☰ quando fechado
+  });
+
+  // Fecha ao clicar em qualquer link dentro do menu
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+  // Fecha ao clicar em qualquer área fora da nav
+  document.addEventListener('click', (ev) => {
+    // ev.target.closest('nav') → verifica se o clique foi dentro de um <nav>
+    if (navLinks.classList.contains('open') && !ev.target.closest('nav')) {
+      closeNav();
+    }
+  });
+
+  // Fecha ao pressionar a tecla Esc
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && navLinks.classList.contains('open')) {
+      closeNav();
+    }
+  });
+
+</script>
+
+</body>
+</html>
